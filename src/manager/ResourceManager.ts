@@ -15,7 +15,7 @@ export default abstract class ResourceManager {
 
 	public static start(options?: LoaderOptions): Loader {
 		const loader = new Loader(options);
-		this.resources.forEach(loader.addResource);
+		this.resources.forEach(res => loader.addResource(res));
 		return loader;
 	}
 

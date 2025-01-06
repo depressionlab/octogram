@@ -57,9 +57,6 @@ export default class Game<TKnownScenes extends string = any> {
 				suppressHiDPIScaling: false,
 				suppressMinimumBrowserFeatureDetection: false,
 				suppressPlayButton: true,
-				// configurePerformanceCanvas2DFallback: {
-				// 	allow: false,
-				// },
 			});
 		}
 
