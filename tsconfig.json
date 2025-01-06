@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"moduleDetection": "force",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"paths": {
+			"~/*": ["./src/*"],
+			"@/*": ["./server/*"]
+		},
+		"resolveJsonModule": true,
+		"types": ["node", "vitest/config", "@vitest/browser/providers/playwright", "vitest/globals"],
+		"allowImportingTsExtensions": true,
+		"strict": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noEmit": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"noUncheckedSideEffectImports": true
+	},
+	"exclude": [
+		"**/node_modules/**",
+		"**/dist/**",
+		"**/build/**"
+	]
+}
