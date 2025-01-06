@@ -7,14 +7,14 @@ export default abstract class AudioManager {
 	]);
 
 	public static start() {
-		ResourceManager.resources.forEach((res) => {
+		(ResourceManager.resources as any).forEach((res: any) => {
 			if (res instanceof Sound)
 				res.volume = this.levels.get(res) ?? 1.0;
 		});
 	}
 
 	public static toggleMute(shouldMute: boolean) {
-		ResourceManager.resources.forEach((res) => {
+		(ResourceManager.resources as any).forEach((res: any) => {
 			if (res instanceof Sound)
 				res.volume = shouldMute ? 0 : (this.levels.get(res) ?? 1.0);
 		});

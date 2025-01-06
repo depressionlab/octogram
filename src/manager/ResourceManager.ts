@@ -1,12 +1,11 @@
 import type { Engine, LoaderOptions } from 'excalibur';
-import { Loader, Resource } from 'excalibur';
+import { ImageSource, Loader } from 'excalibur';
 import AudioManager from './AudioManager';
 // import tilesetPath from './res/tileset.tsx?url';
 
 export default abstract class ResourceManager {
 	public static readonly loadables = {
-		// TilesetResource: new Resource(tilesetPath, 'text'),
-		DADsasdasdj: new Resource('', 'arraybuffer'),
+		Sword: new ImageSource('./sword.png'),
 	};
 
 	public static get resources() {

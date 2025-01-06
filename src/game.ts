@@ -1,21 +1,30 @@
 import type { Loader } from 'excalibur';
-import { DisplayMode, Engine, Logger } from 'excalibur';
+import { Color, DisplayMode, Engine, FadeInOut, Logger } from 'excalibur';
+import { MyLevel } from './levels/MyLevel.ts';
 import ResourceManager from './manager/ResourceManager.ts';
 import SceneManager from './manager/SceneManager.ts';
 import { isCanvasElement } from './utils.ts';
 
-export default class Game<TKnownScenes extends string = any> {
+export type Scenes = 'start';
+
+export default class Game {
 	public static readonly LOGGER: Logger = Logger.getInstance();
 	private static _INSTANCE: Game | null = null;
 
 	public started: boolean = false;
-	private _engine: Engine<TKnownScenes> | null = null;
+	private _engine: Engine<Scenes> | null = null;
 	private _loader: Loader | null = null;
-	private _sceneManager: SceneManager<TKnownScenes> | null = null;
+	private _sceneManager: SceneManager<Scenes> | null = null;
 
 	public start() {
-		this.engine.start(this.loader)
-			.then(ResourceManager.postInitialize(this.engine));
+		this.engine.start('start', {
+			loader: this.loader,
+			inTransition: new FadeInOut({
+				duration: 1000,
+				direction: 'in',
+				color: Color.ExcaliburBlue,
+			}),
+		}).then(ResourceManager.postInitialize(this.engine));
 	}
 
 	public static get instance(): Game {
@@ -38,20 +47,23 @@ export default class Game<TKnownScenes extends string = any> {
 		return this._loader;
 	}
 
-	public get sceneManager(): SceneManager<TKnownScenes> {
+	public get sceneManager(): SceneManager<Scenes> {
 		if (this._sceneManager == null)
 			this._sceneManager = new SceneManager(this.engine);
 		return this._sceneManager;
 	}
 
-	public get engine(): Engine<TKnownScenes> {
+	public get engine(): Engine<Scenes> {
 		if (this._engine == null) {
-			this._engine = new Engine<TKnownScenes>({
+			this._engine = new Engine<Scenes>({
 				canvasElement: Game.canvas,
 				displayMode: DisplayMode.FitScreenAndFill,
 				height: 800,
-				width: 800,
+				width: 600,
 				pixelArt: true,
+				scenes: {
+					start: MyLevel,
+				},
 				pixelRatio: 2,
 				suppressConsoleBootMessage: true,
 				suppressHiDPIScaling: false,
