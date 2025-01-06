@@ -5,6 +5,7 @@ import compression from 'compression';
 import consola from 'consola';
 import express from 'express';
 import morgan from 'morgan';
+import { runGameServer } from './game';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,4 +24,5 @@ if (process.env.NODE_ENV === 'production') {
 
 app.listen(PORT, () => {
 	consola.info(`HTTP server is running on http://localhost:${PORT}`);
+	runGameServer(+WS_PORT);
 });
