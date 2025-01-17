@@ -1,5 +1,9 @@
 import * as ex from 'excalibur';
+import { Enemy } from './Enemy';
+import { Octopus } from './Octopus';
 import { Terrain } from './Terrain';
+
+let score: number = 0;
 
 // const topVertex: number[] = [];
 
@@ -16,20 +20,30 @@ const game = new ex.Engine({
 game.start();
 
 const terrain = new Terrain();
+const octopus = new Octopus();
+
+// Collision handler to update score
+function handleCollision(enemy: ex.Actor, part: string) {
+	if (part === 'firstArm') {
+		score += 1;
+	}
+	else if (part === 'secondArm') {
+		score += 2;
+	}
+	else if (part === 'octopus') {
+		score += 3;
+	}
+
+	console.warn('Score:', score);
+}
+
+const enemy = new Enemy(handleCollision, octopus);
+
+game.input.pointers.primary.on('move', (evt) => {
+	octopus.updated(evt.worldPos.x, evt.worldPos.y);
+	enemy.updateTarget(evt.worldPos.x, evt.worldPos.y);
+});
+
 game.add(terrain);
-
-const triangle = new ex.Polygon({
-	points: [ex.vec(800, 100), ex.vec(0, 100), ex.vec(100, 0)],
-	color: ex.Color.Yellow,
-});
-
-const triangleActor = new ex.Actor({
-	x: 0,
-	y: 0,
-	anchor: ex.vec(0, 0),
-	color: ex.Color.Red,
-});
-
-triangleActor.graphics.use(triangle);
-
-game.add(triangleActor);
+game.add(octopus);
+game.add(enemy);
