@@ -46,4 +46,4 @@ game.input.pointers.primary.on('move', (evt) => {
 
 game.add(terrain);
 game.add(octopus);
-game.add(enemy);
+// game.add(enemy);
